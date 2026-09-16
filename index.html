@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif;background:#f6faf8;color:#18352b;line-height:1.7}
+    a{text-decoration:none;color:inherit}
+    .top{background:#0b5d46;color:#fff;padding:8px 5%;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;font-size:14px}
+    header{background:#fff;box-shadow:0 2px 12px #00000012;position:sticky;top:0;z-index:10}
+    .nav{max-width:1200px;margin:auto;padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:#0b5d46}
+    .logo{width:48px;height:48px;border-radius:50%;background:#0b5d46;color:#fff;display:grid;place-items:center;font-size:24px}
+    .brand small{display:block;color:#777;font-weight:500;font-size:11px}
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{font-weight:600;font-size:14px}
+    nav a:hover{color:#0b8b68}
+    .login-btn{background:#0b5d46;color:#fff;padding:9px 16px;border-radius:8px}
+    .hero{min-height:570px;display:flex;align-items:center;background:linear-gradient(120deg,#e8f7f0,#f8fffc);padding:70px 5%}
+    .hero-inner{max-width:1200px;margin:auto;width:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}
+    .tag{display:inline-block;background:#d5f1e5;color:#0b6b50;padding:6px 13px;border-radius:30px;font-weight:700;font-size:14px;margin-bottom:15px}
+    h1{font-size:clamp(34px,5vw,58px);line-height:1.2;color:#0a503d;margin-bottom:18px}
+    .hero p{font-size:18px;color:#53675f;max-width:650px}
+    .buttons{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap}
+    .btn{padding:12px 22px;border-radius:9px;font-weight:700;display:inline-block}
+    .primary{background:#0b5d46;color:#fff}
+    .secondary{border:1px solid #0b5d46;color:#0b5d46;background:#fff}
+    .hero-card{background:#fff;border-radius:22px;padding:35px;box-shadow:0 15px 45px #0b5d461c;text-align:center}
+    .hero-card .big{font-size:90px;margin-bottom:10px}
+    .hero-card h3{font-size:23px;color:#0b5d46}
+    section{padding:70px 5%}
+    .container{max-width:1200px;margin:auto}
+    .section-title{text-align:center;margin-bottom:38px}
+    .section-title h2{font-size:34px;color:#0b5d46}
+    .section-title p{color:#718078}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{background:#fff;padding:25px;border-radius:15px;box-shadow:0 5px 22px #0000000b;border:1px solid #e4eee9}
+    .icon{font-size:35px;margin-bottom:8px}
+    .card h3{color:#0b5d46;margin-bottom:6px}
+    .about{background:#fff}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}
+    .about-box{background:#eaf7f1;border-radius:20px;padding:35px}
+    .notice{background:#f6faf8}
+    .notice-list{max-width:850px;margin:auto}
+    .notice-item{background:#fff;margin-bottom:12px;padding:16px 20px;border-radius:10px;border-left:4px solid #0b5d46;display:flex;justify-content:space-between;gap:15px}
+    .admission{background:#0b5d46;color:#fff;text-align:center}
+    .admission h2{font-size:35px;margin-bottom:10px}
+    .admission p{max-width:700px;margin:0 auto 20px;color:#d9eee6}
+    footer{background:#073c2e;color:#dcece6;padding:45px 5% 20px}
+    .footer-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
+    footer h3{color:#fff;margin-bottom:12px}
+    footer p,footer li{font-size:14px;color:#c6d9d2}
+    footer ul{list-style:none}
+    .copy{text-align:center;border-top:1px solid #ffffff22;margin-top:30px;padding-top:15px;font-size:13px}
+    .modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:20px}
+    .modal-box{background:#fff;width:min(430px,100%);border-radius:18px;padding:28px;position:relative}
+    .close{position:absolute;right:18px;top:10px;font-size:28px;cursor:pointer}
+    .modal h2{color:#0b5d46;margin-bottom:18px}
+    label{display:block;margin:10px 0 5px;font-weight:600}
+    input,select{width:100%;padding:12px;border:1px solid #ccd9d3;border-radius:8px;font-size:15px}
+    .submit{width:100%;border:0;margin-top:18px;cursor:pointer}
+    .msg{margin-top:12px;text-align:center;color:#0b5d46;font-weight:600}
+    @media(max-width:850px){
+      nav{display:none}.hero-inner,.about-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}
+      .hero{padding:55px 5%}.hero-card{max-width:420px;margin:auto}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top">
+  <span>📚 জ্ঞান • নৈতিকতা • শৃঙ্খলা • মানবিকতা</span>
+  <span>📞 যোগাযোগ: 01XXXXXXXXX</span>
+</div>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#home">
+      <div class="logo">ত</div>
+      <div>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল<small>TAQWA INTERNATIONAL ISLAMIC SCHOOL</small></div>
+    </a>
+    <nav>
+      <a href="#home">হোম</a>
+      <a href="#about">আমাদের সম্পর্কে</a>
+      <a href="#academic">শিক্ষা</a>
+      <a href="#notice">নোটিশ</a>
+      <a href="#admission">ভর্তি</a>
+      <a href="#contact">যোগাযোগ</a>
+      <a class="login-btn" href="#" onclick="openLogin();return false;">লগইন</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <span class="tag">আধুনিক শিক্ষা ও কুরআন শিক্ষার সমন্বয়</span>
+      <h1>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</h1>
+      <p>আপনার সন্তানের সুন্দর ভবিষ্যৎ গড়তে প্রয়োজন নৈতিকতা, ধর্মীয় শিক্ষা ও আধুনিক শিক্ষার সমন্বয়। আমাদের লক্ষ্য জ্ঞানী, সুশৃঙ্খল, মানবিক ও দায়িত্বশীল প্রজন্ম তৈরি করা।</p>
+      <div class="buttons">
+        <a class="btn primary" href="#admission">অনলাইনে ভর্তি</a>
+        <a class="btn secondary" href="#" onclick="openLogin();return false;">Student Login</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="big">🕌📚</div>
+      <h3>শিক্ষার সুন্দর পরিবেশ</h3>
+      <p>কুরআন শিক্ষা + সাধারণ শিক্ষা + নৈতিকতা</p>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div>
+      <div class="section-title" style="text-align:left;margin-bottom:15px"><h2>আমাদের সম্পর্কে</h2></div>
+      <p>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল একটি আধুনিক শিক্ষা প্রতিষ্ঠান, যেখানে কুরআন ও ইসলামিক শিক্ষার পাশাপাশি প্রয়োজনীয় সাধারণ শিক্ষাকে গুরুত্ব দেওয়া হয়।</p>
+      <p style="margin-top:12px">আমাদের উদ্দেশ্য শিক্ষার্থীদের জ্ঞান, চরিত্র, শৃঙ্খলা ও মানবিক মূল্যবোধে সমৃদ্ধ করে ভবিষ্যতের জন্য প্রস্তুত করা।</p>
+    </div>
+    <div class="about-box">
+      <h3>আমাদের লক্ষ্য</h3>
+      <p>“নৈতিকতা, ধর্মীয় শিক্ষা ও আধুনিক শিক্ষার সমন্বয়ে একজন আদর্শ ও আন্তর্জাতিক মানের শিক্ষার্থী তৈরি করা।”</p>
+    </div>
+  </div>
+</section>
+
+<section id="academic">
+  <div class="container">
+    <div class="section-title"><h2>আমাদের শিক্ষা কার্যক্রম</h2><p>শিক্ষার্থীর সার্বিক বিকাশে সমন্বিত শিক্ষা</p></div>
+    <div class="cards">
+      <div class="card"><div class="icon">📖</div><h3>কুরআন শিক্ষা</h3><p>সহীহ তিলাওয়াত, নূরানি শিক্ষা ও প্রয়োজনীয় ইসলামিক জ্ঞান।</p></div>
+      <div class="card"><div class="icon">🎓</div><h3>সাধারণ শিক্ষা</h3><p>আধুনিক ও প্রয়োজনীয় সাধারণ শিক্ষার মাধ্যমে জ্ঞানভিত্তিক প্রস্তুতি।</p></div>
+      <div class="card"><div class="icon">🌱</div><h3>নৈতিক শিক্ষা</h3><p>আদব, শৃঙ্খলা, দায়িত্ববোধ ও মানবিক মূল্যবোধ গড়ে তোলা।</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="notice" id="notice">
+  <div class="container">
+    <div class="section-title"><h2>নোটিশ বোর্ড</h2><p>বিদ্যালয়ের গুরুত্বপূর্ণ ঘোষণা</p></div>
+    <div class="notice-list">
+      <div class="notice-item"><span>📢 নতুন শিক্ষাবর্ষে ভর্তি কার্যক্রম শুরু হয়েছে।</span><b>নতুন</b></div>
+      <div class="notice-item"><span>📅 অভিভাবক সভার তারিখ শীঘ্রই জানানো হবে।</span><b>নোটিশ</b></div>
+      <div class="notice-item"><span>📚 ক্লাস রুটিন ও একাডেমিক তথ্য ওয়েবসাইটে প্রকাশ করা হবে।</span><b>তথ্য</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="admission" class="admission">
+  <div class="container">
+    <h2>আপনার সন্তানের সুন্দর ভবিষ্যতের পথে আজই শুরু করুন</h2>
+    <p>ভর্তি সংক্রান্ত তথ্য জানতে আমাদের সাথে যোগাযোগ করুন। পরবর্তী ধাপে এখানে পূর্ণ Online Admission Form যুক্ত করা হবে।</p>
+    <a class="btn secondary" href="#contact">যোগাযোগ করুন</a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-title"><h2>যোগাযোগ</h2><p>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</p></div>
+    <div class="cards">
+      <div class="card"><div class="icon">📍</div><h3>ঠিকানা</h3><p>এখানে স্কুলের পূর্ণ ঠিকানা যোগ করা হবে।</p></div>
+      <div class="card"><div class="icon">📞</div><h3>ফোন</h3><p>01XXXXXXXXX</p></div>
+      <div class="card"><div class="icon">✉️</div><h3>ই-মেইল</h3><p>school@example.com</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><h3>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</h3><p>কুরআন শিক্ষা ও আধুনিক শিক্ষার সমন্বয়ে আদর্শ শিক্ষার্থী গড়ার প্রত্যয়ে।</p></div>
+    <div><h3>দ্রুত লিংক</h3><ul><li><a href="#about">আমাদের সম্পর্কে</a></li><li><a href="#academic">শিক্ষা কার্যক্রম</a></li><li><a href="#admission">ভর্তি</a></li></ul></div>
+    <div><h3>সিস্টেম</h3><ul><li><a href="#" onclick="openLogin();return false;">Student Login</a></li><li><a href="#" onclick="openLogin();return false;">Teacher Login</a></li><li><a href="#" onclick="openLogin();return false;">Admin Login</a></li></ul></div>
+  </div>
+  <div class="copy">© 2026 তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল — All Rights Reserved</div>
+</footer>
+
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeLogin()">×</span>
+    <h2>🔐 School Login</h2>
+    <label>Login Type</label>
+    <select id="role"><option>Student</option><option>Teacher</option><option>Admin</option></select>
+    <label>Username / ID</label>
+    <input id="user" placeholder="আপনার ID লিখুন">
+    <label>Password</label>
+    <input id="pass" type="password" placeholder="Password">
+    <button class="btn primary submit" onclick="login()">Login</button>
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+
+<script>
+function openLogin(){document.getElementById('loginModal').style.display='flex'}
+function closeLogin(){document.getElementById('loginModal').style.display='none'}
+function login(){
+  const role=document.getElementById('role').value;
+  const user=document.getElementById('user').value.trim();
+  const msg=document.getElementById('msg');
+  if(!user){msg.textContent='দয়া করে ID লিখুন।';return}
+  msg.textContent=role+' Login প্রস্তুত আছে। Backend/database যুক্ত হলে আসল Login কাজ করবে।';
+}
+window.onclick=e=>{if(e.target===document.getElementById('loginModal'))closeLogin()}
+</script>
+</body>
+</html>

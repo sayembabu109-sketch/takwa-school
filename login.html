@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login — তাক্বওয়া</title>
+<style>
+body{margin:0;font-family:system-ui,Arial;background:#eef4f1}.box{max-width:430px;margin:7vh auto;background:#fff;padding:25px;border-radius:18px;box-shadow:0 8px 30px #0001}h1{color:#123b2a}input,button{width:100%;padding:12px;margin:7px 0;border-radius:9px;border:1px solid #ccd5cf;font:inherit}button{background:#123b2a;color:white;border:0}.muted{color:#667}.err{color:#a52a2a}
+</style></head>
+<body>
+<div class="box"><h1>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</h1><h2>Online Login</h2>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button><p id="msg" class="err"></p>
+<p class="muted">Admin এবং Student—দুই ধরনের account Supabase Auth দিয়ে নিরাপদভাবে login করবে।</p></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const cfg=window.TAKWA_CONFIG;
+const sb=supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_KEY);
+async function login(){
+ msg.textContent='';
+ if(cfg.SUPABASE_URL.startsWith('PASTE_')) return msg.textContent='আগে config.js-এ Supabase URL ও Publishable key বসান।';
+ const {data,error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});
+ if(error)return msg.textContent=error.message;
+ const {data:p}=await sb.from('profiles').select('role').eq('id',data.user.id).single();
+ if(!p)return msg.textContent='Profile পাওয়া যায়নি।';
+ location.href=p.role==='admin'?'admin.html':'student.html';
+}
+</script></body></html>

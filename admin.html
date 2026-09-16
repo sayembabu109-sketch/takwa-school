@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="bn">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Online Admin — তাক্বওয়া</title>
+<style>
+body{margin:0;font-family:system-ui,Arial;background:#f3f6f8;color:#17202a}header{background:#123b2a;color:#fff;padding:18px}.wrap{max-width:1100px;margin:auto;padding:18px}.card{background:#fff;padding:18px;border-radius:15px;margin:12px 0;box-shadow:0 3px 15px #0001}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}input,select,textarea,button{width:100%;box-sizing:border-box;padding:11px;margin:5px 0;border:1px solid #ccd3da;border-radius:9px;font:inherit}button{background:#123b2a;color:#fff;border:0}.danger{background:#a52a2a}.tabs{display:flex;gap:8px;overflow:auto}.tabs button{min-width:120px}.hidden{display:none}table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #e5e8eb;text-align:left;font-size:14px}.msg{padding:8px}
+</style></head>
+<body><header><div class="wrap"><h1>Online Admin Panel</h1><p>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</p></div></header>
+<div class="wrap"><div id="guard" class="card">Checking login...</div>
+<div id="app" class="hidden">
+<div class="tabs"><button onclick="tab('students')">Students</button><button onclick="tab('results')">Results</button><button onclick="tab('attendance')">Attendance</button><button onclick="tab('routine')">Routine</button><button onclick="tab('notices')">Notices</button><button onclick="logout()">Logout</button></div>
+<section id="students" class="card"><h2>Students</h2><div class="grid"><input id="name" placeholder="Name"><input id="student_id" placeholder="Student ID"><input id="class_name" placeholder="Class"><input id="roll" placeholder="Roll"><input id="guardian" placeholder="Guardian"><input id="phone" placeholder="Phone"></div><p class="msg">Student account তৈরি করার জন্য Authentication user আগে তৈরি করতে হবে। এই panel profile record তৈরি/আপডেট করার জন্য প্রস্তুত।</p><input id="student_uuid" placeholder="Student Auth User UUID"><button onclick="saveProfile()">Save Student Profile</button><div id="studentList"></div></section>
+<section id="results" class="card hidden"><h2>Result</h2><select id="rs"></select><div class="grid"><input id="exam" value="Final Exam" placeholder="Exam"><input id="subject" placeholder="Subject"><input id="marks" type="number" placeholder="Marks"></div><button onclick="saveResult()">Save Result</button><div id="resultList"></div></section>
+<section id="attendance" class="card hidden"><h2>Attendance</h2><select id="as"></select><div class="grid"><input id="date" type="date"><select id="status"><option>Present</option><option>Absent</option><option>Late</option></select></div><button onclick="saveAttendance()">Save Attendance</button></section>
+<section id="routine" class="card hidden"><h2>Routine</h2><div class="grid"><input id="rc" placeholder="Class"><input id="rd" placeholder="Day"><input id="rp" type="number" placeholder="Period"><input id="rsub" placeholder="Subject"><input id="rt" placeholder="Teacher"><input id="rst" placeholder="Start"><input id="ren" placeholder="End"></div><button onclick="saveRoutine()">Save Routine</button></section>
+<section id="notices" class="card hidden"><h2>Notice</h2><input id="nt" placeholder="Title"><textarea id="nb" placeholder="Details"></textarea><button onclick="saveNotice()">Publish</button></section>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script>
+<script>
+const sb=supabase.createClient(TAKWA_CONFIG.SUPABASE_URL,TAKWA_CONFIG.SUPABASE_KEY);let users=[];
+const esc=x=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+async function boot(){const {data:{user}}=await sb.auth.getUser();if(!user){location.href='login.html';return}
+const {data:p,error}=await sb.from('profiles').select('*').eq('id',user.id).single();if(error||p?.role!=='admin'){await sb.auth.signOut();location.href='login.html';return}
+guard.classList.add('hidden');app.classList.remove('hidden');load()}
+async function load(){const {data,error}=await sb.from('profiles').select('*').eq('role','student').order('created_at',{ascending:false});users=data||[];studentList.innerHTML='<table><tr><th>ID</th><th>Name</th><th>Class</th><th>Roll</th></tr>'+users.map(x=>`<tr><td>${esc(x.student_id)}</td><td>${esc(x.full_name)}</td><td>${esc(x.class_name)}</td><td>${esc(x.roll)}</td></tr>`).join('')+'</table>';let opts=users.map(x=>`<option value="${x.id}">${esc(x.full_name)} — ${esc(x.student_id)}</option>`).join('');rs.innerHTML=opts;as.innerHTML=opts}
+async function saveProfile(){if(!student_uuid.value)return alert('Student Auth User UUID দিন');const {error}=await sb.from('profiles').upsert({id:student_uuid.value,full_name:name.value,role:'student',student_id:student_id.value,class_name:class_name.value,roll:roll.value,guardian_name:guardian.value,phone:phone.value});if(error)alert(error.message);else{alert('Online database-এ student profile save হয়েছে');load()}}
+async function saveResult(){const {error}=await sb.from('results').insert({student_id:rs.value,exam_name:exam.value,subject:subject.value,marks:Number(marks.value)});if(error)alert(error.message);else alert('Result online database-এ save হয়েছে')}
+async function saveAttendance(){const {error}=await sb.from('attendance').upsert({student_id:as.value,attendance_date:date.value,status:status.value},{onConflict:'student_id,attendance_date'});if(error)alert(error.message);else alert('Attendance saved')}
+async function saveRoutine(){const {error}=await sb.from('routines').insert({class_name:rc.value,day_name:rd.value,period_no:Number(rp.value),subject:rsub.value,teacher:rt.value,start_time:rst.value,end_time:ren.value});if(error)alert(error.message);else alert('Routine saved')}
+async function saveNotice(){const {error}=await sb.from('notices').insert({title:nt.value,body:nb.value});if(error)alert(error.message);else alert('Notice published')}
+function tab(id){['students','results','attendance','routine','notices'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id))}
+async function logout(){await sb.auth.signOut();location.href='login.html'}boot();
+</script></body></html>
