@@ -1,29 +1,740 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Login — তাক্বওয়া</title>
-<style>
-body{margin:0;font-family:system-ui,Arial;background:#eef4f1}.box{max-width:430px;margin:7vh auto;background:#fff;padding:25px;border-radius:18px;box-shadow:0 8px 30px #0001}h1{color:#123b2a}input,button{width:100%;padding:12px;margin:7px 0;border-radius:9px;border:1px solid #ccd5cf;font:inherit}button{background:#123b2a;color:white;border:0}.muted{color:#667}.err{color:#a52a2a}
-</style></head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login - তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, "Noto Sans Bengali", sans-serif;
+      background: linear-gradient(135deg, #e8f5f0, #f5f9f7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: #00695c;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00695c;
+      font-size: 25px;
+      margin: 8px 0;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .login-type {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .type-btn {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #00897b;
+      background: white;
+      color: #00695c;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .type-btn.active {
+      background: #00695c;
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #00897b;
+      box-shadow: 0 0 0 2px rgba(0,137,123,0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #00695c;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .login-btn:hover {
+      background: #004d40;
+    }
+
+    .login-btn:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+      font-size: 14px;
+    }
+
+    .error {
+      display: block;
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .success {
+      display: block;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .info {
+      margin-top: 20px;
+      padding: 12px;
+      background: #f1f8f6;
+      border-radius: 10px;
+      color: #555;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #00695c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
 <body>
-<div class="box"><h1>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</h1><h2>Online Login</h2>
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<button onclick="login()">Login</button><p id="msg" class="err"></p>
-<p class="muted">Admin এবং Student—দুই ধরনের account Supabase Auth দিয়ে নিরাপদভাবে login করবে।</p></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script>
-const cfg=window.TAKWA_CONFIG;
-const sb=supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_KEY);
-async function login(){
- msg.textContent='';
- if(cfg.SUPABASE_URL.startsWith('PASTE_')) return msg.textContent='আগে config.js-এ Supabase URL ও Publishable key বসান।';
- const {data,error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});
- if(error)return msg.textContent=error.message;
- const {data:p}=await sb.from('profiles').select('role').eq('id',data.user.id).single();
- if(!p)return msg.textContent='Profile পাওয়া যায়নি।';
- location.href=p.role==='admin'?'admin.html':'student.html';
-}
-</script></body></html>
+
+  <div class="login-box">
+
+    <div class="logo">ত</div>
+
+    <h1>তাক্বওয়া ইন্টারন্যাশনাল ইসলামিক স্কুল</h1>
+
+    <div class="subtitle">
+      TAQWA INTERNATIONAL ISLAMIC SCHOOL
+    </div>
+
+    <!-- Login Type -->
+    <div class="login-type">
+      <button
+        id="studentBtn"
+        class="type-btn active"
+        onclick="showStudentLogin()">
+        🎓 Student
+      </button>
+
+      <button
+        id="adminBtn"
+        class="type-btn"
+        onclick="showAdminLogin()">
+        👨‍💼 Admin
+      </button>
+    </div>
+
+
+    <!-- STUDENT LOGIN -->
+    <div id="studentLogin">
+
+      <div class="form-group">
+        <label>Student ID</label>
+
+        <input
+          type="text"
+          id="studentId"
+          placeholder="যেমন: STU-1002"
+          autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <input
+          type="password"
+          id="studentPassword"
+          placeholder="Student Password"
+          autocomplete="current-password">
+      </div>
+
+      <button
+        id="studentLoginBtn"
+        class="login-btn"
+        onclick="studentLogin()">
+        Student Login
+      </button>
+
+    </div>
+
+
+    <!-- ADMIN LOGIN -->
+    <div id="adminLogin" class="hidden">
+
+      <div class="form-group">
+        <label>Admin Email</label>
+
+        <input
+          type="email"
+          id="adminEmail"
+          placeholder="Admin Email"
+          autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <input
+          type="password"
+          id="adminPassword"
+          placeholder="Admin Password"
+          autocomplete="current-password">
+      </div>
+
+      <button
+        id="adminLoginBtn"
+        class="login-btn"
+        onclick="adminLogin()">
+        Admin Login
+      </button>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+    <div id="message" class="message"></div>
+
+
+    <div class="info">
+      🎓 <b>Student:</b> Student ID + Password দিয়ে Login করুন।<br>
+      👨‍💼 <b>Admin:</b> Admin Email + Password দিয়ে Login করুন।
+    </div>
+
+    <a href="index.html" class="back">
+      ← School Home
+    </a>
+
+  </div>
+
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Your Supabase Config -->
+  <script src="config.js"></script>
+
+
+  <script>
+
+    // ==============================
+    // SUPABASE SETUP
+    // ==============================
+
+    if (
+      !window.TAKWA_CONFIG ||
+      !window.TAKWA_CONFIG.SUPABASE_URL ||
+      !window.TAKWA_CONFIG.SUPABASE_KEY
+    ) {
+      showMessage(
+        "config.js পাওয়া যাচ্ছে না বা Supabase configuration ঠিক নেই।",
+        "error"
+      );
+      throw new Error("Supabase configuration missing");
+    }
+
+    const SUPABASE_URL =
+      window.TAKWA_CONFIG.SUPABASE_URL;
+
+    const SUPABASE_KEY =
+      window.TAKWA_CONFIG.SUPABASE_KEY;
+
+    const sb =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // ==============================
+    // LOGIN TYPE
+    // ==============================
+
+    function showStudentLogin() {
+
+      document
+        .getElementById("studentLogin")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("adminLogin")
+        .classList.add("hidden");
+
+      document
+        .getElementById("studentBtn")
+        .classList.add("active");
+
+      document
+        .getElementById("adminBtn")
+        .classList.remove("active");
+
+      clearMessage();
+    }
+
+
+    function showAdminLogin() {
+
+      document
+        .getElementById("studentLogin")
+        .classList.add("hidden");
+
+      document
+        .getElementById("adminLogin")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("studentBtn")
+        .classList.remove("active");
+
+      document
+        .getElementById("adminBtn")
+        .classList.add("active");
+
+      clearMessage();
+    }
+
+
+    // ==============================
+    // MESSAGE
+    // ==============================
+
+    function showMessage(text, type) {
+
+      const box =
+        document.getElementById("message");
+
+      box.textContent = text;
+
+      box.className =
+        "message " + type;
+    }
+
+
+    function clearMessage() {
+
+      const box =
+        document.getElementById("message");
+
+      box.textContent = "";
+
+      box.className = "message";
+    }
+
+
+    // ==============================
+    // STUDENT LOGIN
+    // ==============================
+
+    async function studentLogin() {
+
+      clearMessage();
+
+      const studentId =
+        document
+          .getElementById("studentId")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("studentPassword")
+          .value;
+
+      const button =
+        document.getElementById(
+          "studentLoginBtn"
+        );
+
+
+      if (!studentId || !password) {
+
+        showMessage(
+          "Student ID এবং Password দুটোই লিখুন।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      button.disabled = true;
+
+      button.textContent = "Logging in...";
+
+
+      try {
+
+        const functionUrl =
+          SUPABASE_URL +
+          "/functions/v1/student-login";
+
+
+        const response =
+          await fetch(functionUrl, {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY
+            },
+
+            body: JSON.stringify({
+
+              student_id: studentId,
+
+              password: password
+
+            })
+
+          });
+
+
+        const result =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.error ||
+            "Student login failed."
+          );
+
+        }
+
+
+        if (
+          !result.access_token ||
+          !result.refresh_token
+        ) {
+
+          throw new Error(
+            "Login token পাওয়া যায়নি।"
+          );
+
+        }
+
+
+        // Set Supabase Session
+
+        const {
+          error: sessionError
+        } = await sb.auth.setSession({
+
+          access_token:
+            result.access_token,
+
+          refresh_token:
+            result.refresh_token
+
+        });
+
+
+        if (sessionError) {
+
+          throw sessionError;
+
+        }
+
+
+        showMessage(
+          "Login সফল! Student Portal খোলা হচ্ছে...",
+          "success"
+        );
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            "student.html";
+
+        }, 700);
+
+
+      } catch (error) {
+
+        console.error(
+          "Student Login Error:",
+          error
+        );
+
+        showMessage(
+          error.message ||
+          "Student login failed.",
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "Student Login";
+
+      }
+
+    }
+
+
+    // ==============================
+    // ADMIN LOGIN
+    // ==============================
+
+    async function adminLogin() {
+
+      clearMessage();
+
+      const email =
+        document
+          .getElementById("adminEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("adminPassword")
+          .value;
+
+      const button =
+        document.getElementById(
+          "adminLoginBtn"
+        );
+
+
+      if (!email || !password) {
+
+        showMessage(
+          "Admin Email এবং Password দুটোই লিখুন।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Logging in...";
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await sb.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        if (!data.user) {
+
+          throw new Error(
+            "Admin account পাওয়া যায়নি।"
+          );
+
+        }
+
+
+        // Check Admin Profile
+
+        const {
+          data: profile,
+          error: profileError
+        } =
+          await sb
+            .from("profiles")
+            .select("role, full_name")
+            .eq("id", data.user.id)
+            .single();
+
+
+        if (profileError) {
+
+          await sb.auth.signOut();
+
+          throw new Error(
+            "Admin profile পাওয়া যায়নি।"
+          );
+
+        }
+
+
+        if (profile.role !== "admin") {
+
+          await sb.auth.signOut();
+
+          throw new Error(
+            "এই account-এর Admin permission নেই।"
+          );
+
+        }
+
+
+        showMessage(
+          "Admin Login সফল! Admin Panel খোলা হচ্ছে...",
+          "success"
+        );
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            "admin.html";
+
+        }, 700);
+
+
+      } catch (error) {
+
+        console.error(
+          "Admin Login Error:",
+          error
+        );
+
+        showMessage(
+          error.message ||
+          "Admin login failed.",
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "Admin Login";
+
+      }
+
+    }
+
+
+    // ==============================
+    // ENTER KEY LOGIN
+    // ==============================
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key !== "Enter") return;
+
+
+        const adminVisible =
+          !document
+            .getElementById("adminLogin")
+            .classList.contains("hidden");
+
+
+        if (adminVisible) {
+
+          adminLogin();
+
+        } else {
+
+          studentLogin();
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
